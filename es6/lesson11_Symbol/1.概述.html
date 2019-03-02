@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*1.概述*/
+    //Symobol 是第7种原始数据类型；表示独一无二的值；值通过Symbol函数生成
+    //Symbol 函数不能使用new命令，否则会报错。因为生成的Symbol是一个原始类型的值，不是对象，类似于字符串的数据类型
+    //Symbol函数可以接受一个字符串参数，表示对Symbol实例的描述，来进行区分
+    let s1 = Symbol('foo');
+    let s2 = Symbol('bar');
+    s1// Symbol(foo)
+    s2// Symbol(bar)
+    s1.toString() // "Symbol(foo)"
+    s2.toString() // "Symbol(bar)"
+
+    //如果Symbol参数是对象，就会调用该对象的toString()方法，将其转为字符串，然后生成一个Symbol值。
+    //参数相同的Symbol函数的返回值不会相同
+    //Symbol值不能与其他值进行运算，会报错。
+    let sym = Symbol('my symbol');
+    "your symbols is " + sym //Type error: can't convert symbol to string
+    `your symbol is ${sym}`//Type error .....
+
+    //Symbol 可以显式转为字符串 和布尔值 但是不能转为数值
+    let sym = Symbol('my symbol');
+    String(sym) //'Symbol(My symbol)'
+    sym.toString()//Symbol(My symbol)'
+
+    Boolean(sym) //true
+    !sym // false
+
+    Number(sym)//TypeError.....
+</script>
+</body>
+</html>

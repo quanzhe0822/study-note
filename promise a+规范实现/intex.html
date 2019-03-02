@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var d = {
+            a:2
+        }
+        function test(f1,f2){
+            var _this = this;
+            f1(_this);
+        }
+        test(function a(d){
+            console.log(33)
+        })
+    </script>
+</body>
+
+</html>

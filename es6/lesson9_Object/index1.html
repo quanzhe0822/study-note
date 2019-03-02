@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /* 属性简写表示法 */
+
+    const foo = 'bar';
+    const baz = {
+      foo
+    };
+    ////////////
+    
+
+
+    const cart = {
+      _wheel: 4,
+      get wheel() {
+        return this._wheel
+      },
+
+      set wheel(value) {
+        if (value < this._wheel) {
+          throw new Error('数值太小了')
+        }
+        this._wheel = value
+      }
+    }
+  </script>
+</body>
+
+</html>

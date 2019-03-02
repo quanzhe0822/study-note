@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //1.含义
+    //WeakSet结构与Set类似 区别 WeakSet成员只能是对象
+    //WS特点
+    //es6规定WS不可遍历
+    //因为WS成员数不是固定，可能存在，也可能不存在。
+    //WS成员会被垃圾回机制进行回收，遍历机制无法保证WS成员的存在与否。
+    //垃圾回收机制触发条件是，值的引用次数为0的时候，而WS中的对象都是弱引用，不会增加引用次数，
+    //所以一但对象在外部没有被引用的时候，垃圾回收机制就会进行回收。
+    //这也是跟Set的区别，由于不是弱引用即使对象在外部不在被引用时，在Set内部还存在着一个引用次数，所以不会触发垃圾回收
+
+    //2.语法
+    const ws = new WeakSet()
+    //作为构造函数，WS可以接受一个数组或类数组的对象作为参数（实际上任何具有Iterable接口的对象，都可以作为WS的对象）
+    //该数组的成员，都会自动成为WS的成员
+    //方法
+    WS.prototype.add(VALUE)
+    WS.prototype.delete(value)
+    WS.prototype.has(VALUE)
+    //由于WS不能遍历所以没有size属性和forEach等遍历方法
+
+    //例子
+    const foos = new WeakSet();
+    class Foo {
+    	constructor(){
+    		foos.add(this)
+        }
+        method () {
+    		if(!foos.has(this)){
+    			throw new TypeError('foo.prototype.method 只能在Foo的实例上调用')
+            }
+        }
+    }
+    //foos对实例的引用，不会被计入内存回收机制，所以删除实例的回收，不用考虑foos，也不会出现内存泄漏
+
+</script>
+</body>
+</html>

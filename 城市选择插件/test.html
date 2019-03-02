@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .province,
+        .city {
+            display: inline-block;
+        }
+
+        span {
+            display: inline-block;
+        }
+
+        .check {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #222;
+        }
+
+        .active .check {
+            background-color: #222;
+        }
+
+        .city-box {
+            display: none;
+        }
+
+        .city-container .open {
+            display: block;
+        }
+
+        .province-box .open .province-name {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="all" data-selected=0>
+        <span class="check all-check"></span>
+        <span class="province-name">全选</span>
+    </div>
+    <div class="province-box">
+        <div class="province" data-value="beijing" data-municipality=true data-selected=0 data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">北京</span>
+        </div>
+        <div class="province" data-value="shanghai" data-municipality=true data-selected=0 data-open=0>
+                <span class="check province-check"></span>
+                <span class="province-name">上海</span>
+            </div>
+        <div class="province" data-value="jilin" data-selected=0 data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">吉林</span>
+        </div>
+        <div class="province" data-value="liaoning" data-selected=0 data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">辽宁</span>
+        </div>
+        <div class="province" data-value="heilongjiang" data-selected=0 data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">黑龙江</span>
+        </div>
+    </div>
+    <div class="city-container">
+        <div class="city-box" data-province="jilin">
+            <div class="city" data-province="jilin" data-value="yanbian" data-selected=0>
+                <span class="check city-check"></span>
+                <span>延边</span>
+            </div>
+            <div class="city" data-province="jilin" data-value="changchun" data-selected=0>
+                <span class="check city-check"></span>
+                <span>长春</span>
+            </div>
+            <div class="city" data-province="jilin" data-value="siping" data-selected=0>
+                <span class="check city-check"></span>
+                <span>四平</span>
+            </div>
+        </div>
+        <div class="city-box" data-province="liaoning">
+            <div class="city" data-province="liaoning" data-value="shenyang" data-selected=0>
+                <span class="check city-check"></span>
+                <span>沈阳</span>
+            </div>
+            <div class="city" data-province="liaoning" data-value="panjin" data-selected=0>
+                <span class="check city-check"></span>
+                <span>盘锦</span>
+            </div>
+            <div class="city" data-province="liaoning" data-value="dalian" data-selected=0>
+                <span class="check city-check"></span>
+                <span>大连</span>
+            </div>
+        </div>
+        <div class="city-box" data-province="heilongjiang">
+            <div class="city" data-province="heilongjiang" data-value="mudanjiang" data-selected=0>
+                <span class="check city-check"></span>
+                <span>牡丹江</span>
+            </div>
+            <div class="city" data-province="heilongjiang" data-value="haerbin" data-selected=0>
+                <span class="check city-check"></span>
+                <span>哈尔滨</span>
+            </div>
+            <div class="city" data-province="heilongjiang" data-value="jixi" data-selected=0>
+                <span class="check city-check"></span>
+                <span>鸡西</span>
+            </div>
+        </div>
+        <div class="show"></div>
+
+
+    </div>
+    <div class="d">
+            <span data-id="1">888</span>
+            <span data-id="1">888</span>
+            <span data-id="3">888</span>
+        </div>
+    <script>
+      console.log($('span').filter('[data-id=1]'))
+    </script>
+    <script src="d.js"></script>
+    <script src="module.js"></script>
+    <!-- <script>
+        $('.all').click(function () {
+            provinceSelect.state = Number($(this).attr('data-selected')) === 1 ? 0 : 1;
+        });
+        $('.province').click(function (e) {
+            if ($(e.target).hasClass('province-check') || $(this).attr('data-municipality')) {
+                var pro = $(this).attr('data-value');
+                province[pro].state = Number($(this).attr('data-selected')) === 1 ? 0 : 1;
+            } else if ($(e.target).hasClass('province-name')) {
+                var pro = $(this).attr('data-value');
+                provinceOpen[pro].isOpen = Number($(this).attr('data-open')) === 1 ? 0 : 1;
+            }
+
+        });
+        $('.city').click(function () {
+            var $this = $(this)
+            var pro = $this.attr('data-province');
+            var cName = $this.attr('data-value');
+            city[pro].forEach(function (v, i) {
+                if (v.cName === cName) {
+                    v.state = Number($this.attr('data-selected')) === 1 ? 0 : 1;
+                }
+            })
+        });
+        $('.show').click(function (e) {
+            var v = $(e.target).attr('data-value');
+            var del = allCities.citiesList[v];
+            del.state = 0;
+            var temp = new Object();
+            for (let item in allCities.citiesList) {
+                let val = allCities.citiesList[item];
+                temp[item] =  val; 
+            }
+            allCities.citiesList=temp;
+
+
+        })
+    </script> -->
+</body>
+
+</html>

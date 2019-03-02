@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+	//1.Symbol.hasInstance
+	class MyClass {
+		[Symbol.hasInstance](foo) {
+			return foo instanceof Array;
+		}
+	}
+
+	[1, 2, 3] instanceof new MyClass()//true
+
+	class Even {
+		static [Symbol.hasInstance](obj) {
+			return Number(obj) % 2 === 0
+		}
+	}
+
+	//等同于
+	const Even = {
+		[Symbol.hasInstance](obj) {
+			return Number(obj) % 2 === 0;
+		}
+	}
+	1 instanceof Even //false
+	2 instanceof Even //true
+	12323 instanceof Even //false
+
+	//2.Symbol.isConcatSpreadable 表示该对象用于Array.prototype.concat()时，是否可以展开
+	let arr1 = ['c', 'd'];
+	arr1.[Symbol.isConcatSpreadable] = false;//默认值为undefinde ，和值为true时可以展开，反之亦然
+	['a', 'b'].concat(arr1, 'e')//['a','b',['c','d']]
+
+	let arr2 = {0: 'c', 1: 'd', length: 2}
+		['a', 'b'].concat(arr2)//对象为类数组时 默认值不能展开 它的属性等于true才能展开
+
+
+	//3.Symbol.isConcatSpreadable属性也可以定义在类里面
+	class A1 extends Array {
+		constructor(args) {
+			super(args);
+			this.[Symbol.isConcatSpreadable] = true;
+		}
+	}
+
+	class A2 extends Array {
+		constructor(args) {
+			super(args)
+		}
+
+		get [Symbol.isConcatSpreadable]() {
+			return false;
+		}
+	}
+
+	let a1 = new A1();
+	a1[0] = 3;
+	a1[1] = 4;
+	let a2 = new A2();
+	a2[0] = 5;
+	a2[1] = 6;
+	[1, 2].concat(a1).concat(a2)
+
+	//4.Symbol.species 创建衍生对象时 指定构造函数
+	//例子1
+	class MyArray extends Array {
+		static get [Symbol.species]() {
+			return Array;
+		}
+	}
+
+	const a = new MyArray();
+	const b = a.map(x => x);
+	b instanceof MyArray //false
+	b instanceof Array //true
+
+	//例子2
+	class T1 extends Promise {
+	}
+
+	class T2 extends Promise {
+		static get [Symbol.species]() {
+			return Promise
+		}
+	}
+
+	new T1(r => r()).then(v => v) instanceof T1 //true
+	new T2(r => r()).then(v => v) instanceof T2 //false
+	//Symbol.species 的作用在于，实例对象运行过程需要再次调用自身构造函数时 会调用该属性指定的构造函数
+	//用途是，有些类库时基于基类的基础上修改的，那么子类使用继承方法时，可能希望返回基类的实例，而不是子类的实例。
+
+
+	//5.Symbol.match
+	String.prototype.match(regexp)
+	//等同于
+	regexp[Symbol.match](this)
+
+	class MyMathcer {
+		[Symbol.match](string) {
+			return 'hello world'.indexOf(string);
+		}
+	}
+
+	'e'.match(new MyMathcer())//1
+
+	//6.Symbol.replace
+	String.prototype.replace(searchValue, replaceValue)
+	//等同于
+	searchValue[Stmbol.replace](this, repalceValue);
+	//第一个参数时replace方法正在作用的对象，第二参数时替换后的值
+	const x = {}
+	x[Symbol.replace] = (...s) => console.log(s);
+	'Hello'.replace(x, 'World') //['hello','world']
+	//本例子第一个参数时'Hello',第二参数是'world'
+
+
+	//7.Symbol.search
+	String.prototype.search(regexp)
+	//等同于
+	regexp[Symbol.search](this)
+
+	class MySearch {
+		constructor(value) {
+			this.value = value
+		}
+
+		[Symbol.search](string) {
+			return string.indexOf(this.value);
+		}
+	}
+
+	'footer'.search(new MySearch('foo'))//0
+
+	//8.Symbol.split
+	String.prototype.split(separator, limit)
+	//等同于
+	separator[Symbol.split](this, limit)
+
+	class MySplit {
+		constructor(value) {
+			this.value = value
+		}
+
+		[Symbol.split](string) {
+			let index = string.indexOf(this.value);
+			if (index === -1) {
+				return string
+			}
+			return [
+				string.substr(0, index),
+				string.substr(index + this.value.length)
+			]
+
+		}
+	}
+
+	'foobar'.split(new MySplit('foo'))//[' ','bar']
+
+	//8.Symbol.iterator
+	//.....
+
+	//9.Symbol.toPrimitive 指向一个方法，改对象被抓内原始类型的值时，会调用这个方法，返回该对象对应的原始类型值
+	let obj = {
+		[Symbol.toPrimitive](hint) {
+			switch (hint) {
+				case 'number':
+					return 123;
+				case 'string':
+					return 'str';
+				case 'default':
+					return 'default';
+				default:
+					throw new Error();
+			}
+		}
+	}
+	//该方法被调用时，会接受一个字符串参数，表示当前的运算模式，
+	//需要转换成成数值的场合  -'number'
+	//需要转换成字符串的场合 -'string'
+	//2中类型都可以的场合 -'default'
+	2 * obj //246
+	3 + obj //'3default'
+	obj === 'default' //true
+	String(obj) //str
+
+	//10.Symbol.toStringTag 作为对象的属性时，如果该对象调用toString方法就会返回 toStringTag的值
+	//例1
+	({[Symbol.toStringTag]: 'foo'}.toString())
+	//"[object foo]"
+	//例2
+	class Collection {
+		get [Symbol.toStringTag]() {
+			return 'xxx';
+		}
+	}
+	let x = new Collection();
+	Object.prototype.toString.call(x)
+
+    //11.Symbol.unscopables
+
+
+
+</script>
+</body>
+</html>

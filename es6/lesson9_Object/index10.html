@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var obj = {foo: 'bar' , baz: 43};
+    Object.keys(obj)
+    //["foo","baz"]
+
+    let {keys,values,entries} = Object;
+    let obj = {a:1,b:2,c:3};
+    for( let key of keys(obj)){
+    	console.log(key)//'a','b','c'
+    }
+    for (let values of values(obj)){
+    	console.log(values); 1,2,3
+    }
+    for (let [key,value] of entries(obj)){
+    	console.log([key,value])//[a:1],[b:2],[c:3]
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //Promise.prototype.catch方法是.then(null,rejection)的别名，用于指定发生错误时的回调函数
+    //不仅可以捕获Promise实例对象的错误，也可以捕获then方法指定的回调函数。
+
+    //如果Promise状态已经变成resolved，再抛出错误时无效的，因为Promise的状态一旦改变，就永久保持该状态，不会再变了。
+    const promise = new Promise(function (resolev, reject) {
+      resolve('ok');
+      throw new Error('test');
+    });
+    promise.then(function (value) {
+      console.log(value)
+    }).catch(function (error) {
+      console.log(error)
+    }); //错误被捕获
+
+    //Promise对象的错误具有“冒泡”性质，会一直向后传递，直到被捕获位置。
+    promise
+      .then(v => console.log(v))
+      .then(() => console.log('test'))
+      .catch(function (error) {
+        //处理前面三个Promise产生的错误
+      })
+
+    //Promise内部的错误不会影响到Promise的外部代码执行
+    new Promise(function (res, rej) {
+      //会报未定义错误，ReferenceError: x is not defined
+      res(x)
+    }).then(function () {
+      console.log('continue..');
+    })
+    setTimeout(() => {
+      console.log(123)
+    }, 1000);
+    // Uncaught (in promise) ReferenceError: x is not defined
+    // 123
+
+    //catch方法返回的还是 一个Promise对象，因此后面还可以接着调用then方法
+    //如果没有报错，就会跳过catch方法
+    new Promise(function(res,rej){
+      res(x)
+    }).then(function(){
+      console.log('continue')
+    }).catch(err => {console.log(err)})
+    .then(function(){
+      console.log('end')
+    })
+  </script>
+</body>
+
+</html>

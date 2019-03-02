@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+	/*super关键字 指向当前对象的原型对象*/
+	const proto = {
+		foo: 'hello'
+	}
+	const obj = {
+		foo: 'word',
+		find() {
+			return super.foo;
+		}
+	}
+	Object.setPrototypeOf(obj, proto);
+	obj.find()
+
+    //super.foo 指向原型对象proto的foo方法，但是绑定的this却还是当前对象‘0bj';
+    const proto2 = {
+		x: 'hello',
+      foo(){
+			console.log(this.x);
+      }
+    }
+    const obj2 = {
+		x: 'world',
+      foo(){
+			super.foo()
+      }
+    }
+    Object.setPrototypeOf(obj2,proto2)
+    obj2.foo()//'world'
+
+</script>
+</body>
+</html>

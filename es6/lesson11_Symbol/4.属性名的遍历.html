@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*属性名的遍历*/
+    //Symbol 作为属性名时，该属性不会出现在for...in,for...of 循环中，
+    // 也不会被Object.keys(),Object.getOwnPropertyNames(),Json.stringfy()返回。
+    //但是，它也不是私有属性，可以使用Object。getOwnPropertySymbols方法获取Symbol属性名
+
+    const obj ={};
+    let a = Symbol('a');
+    let b = Symbol('b');
+
+    obj[a] = 'hello';
+    obj[b] = 'world';
+
+    const objectSymbols = Object.getOwnPropertySymbols(obj);
+    objectSymbols //[Symbol(a),Symbol(b)]
+
+    //由于以Symbol值作为名称属性，不会被常规方法遍历得到。我们可以利用这个特性，为对象定义一些非私有的，但又希望只用于内部的方法。
+
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*_proto_属性，Object.setPrototypeOf(),Object.getPrototypeOf()*/
+    // _proto_用来读取或设置对象的prototype对象；本质是内部属性，不是正式的API；语义，兼容性差不推荐使用
+    //1.Object.setProrotypeOf()
+    //格式
+    Object.setPrototypeOf(object,prototype)
+    //用法
+    let proto = {};
+    let obj = { x: 10};
+    Object.setPrototypeOf(obj,proto);
+    proto.y = 20;
+    proto.z = 40;
+    obj.x //10
+    obj.y //20
+    obj.z //40
+
+    //如果第一个参数不是对象，会自动转为对象。但是由于返回的是第一个参数本身，所以这个操作不会产生任何效果
+    Object.setPrototypeOf(1,{})===1 //true
+    Object.setPrototypeOf(true, {}) === true //true
+    Object.setPrototypeOf('foo', {}) === 'foo' //true
+    //由于undefine ,null  无法转为对象，所以放在第一个参数会报错
+
+
+    //2.Object.getPrototypeOf()
+    function Rectangle() {
+
+    }
+    const rec = new Rectangle();
+    Object.getPrototypeOf(rec) === Rectangle.prototype // true
+    Object.setPrototypeOf(rec,Object.prototype);
+    Object.getPrototypeOf(rec) === Rectangle.prototype // false
+
+    //如果参数不是对象，会被自动转为对象
+    Object.getPrototypeOf(1)
+    //返回Number 构造函数的prototype
+    Object.getPrototypeOf('foo')
+    //同上
+    Object.getPrototypeOf(true)
+    //同上
+
+    //undefined,null 无法转为对象，所以会报错
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+
+<body>
+<script>
+	/* Object.getOwnPropertyDescriptors 返回某个对象属性（非继承属性）的描述对象*/
+	const obj = {
+		foo: 123,
+		get bar() {
+			return 'abc'
+		}
+	};
+	Object.getOwnPropertyDescriptors(obj)
+	// {
+	//   foo:{
+	//     value: 123,
+	//     writable: true,
+	//     enumerable: true,
+	//     configurable: true
+	//   },
+	//   bar: {
+	//     get: [Function: get bar],
+	//     set: undefined,
+	//     enumerable: true,
+	//     configurable: true
+	//   }
+	// }
+
+	function getOwnPropertyDescriptors(obj) {
+		const result = {};
+		for (let key of Reflect.ownKeys(obj)) {
+			result[key] = Object.getOwnPropertyDescriptor(obj, key);
+		}
+		return result;
+	}
+
+
+	//正确拷贝 get set 属性
+	const source = {
+		set foo(value) {
+			console.log(value)
+		}
+	}
+	const target1 = {}
+	Object.defineProperties(target1, Object.getOwnPropertyDescriptors(source));
+	Object.getOwnPropertyDescriptor(target1, 'foo');
+	//{
+	// get:undefined,
+	// set:[Function: set foo],
+	// enumerable: true,
+	// configurable: true
+	// }
+
+    //配合Object.create 将对象属性克隆到一个新对象。属于浅拷贝
+    const obj2 ={
+	    foo: 123,
+	    get bar() {
+		    return 'abc'
+	    }
+    }
+    const clone = Object.create(Object.getPrototypeOf(obj2),Object.getOwnPropertyDescriptors(obj2));
+
+</script>
+</body>
+
+</html>

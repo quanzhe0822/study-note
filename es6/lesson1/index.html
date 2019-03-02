@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./lib/person.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function move({
+      x = 0,
+      y = 0
+    } ) {
+      console.log( [x, y]);
+    }
+
+    move({
+      x: 3,
+      y: 8
+    }); // [3, 8]
+    move({
+      x: 3
+    }); // [3, 0]
+    move({}); // [0, 0]
+    move(); // [0, 0]
+  </script>
+</body>
+
+</html>

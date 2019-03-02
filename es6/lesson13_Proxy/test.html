@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .middle-box {
+      position: relative;
+      width: 300px;
+
+      border: 1px solid #111;
+    }
+
+    .middle-inner p {
+      position: relative;
+      top: 50%;
+    }
+  </style>
+</head>
+<div class="middle-box">
+  <div class="middle-inner">
+    <p><span class="suc-tip">前端开发博客，专注前端开发和web教程</span><br /><span class="suc-link">快捷入口：<a href="http://caibaojian.com">http://caibaojian.com</a></span></p>
+    <p style="display:none;"><span class="suc-tip">5年的老博客，一直致力于WEB开发</span></p>
+  </div>
+</div>
+
+<body>
+  <script>
+    
+    var obj = {
+    foo: 4,
+    bar:2
+}
+var recieverObject = {
+    foo: 0,
+};
+Reflect.set(obj,'bar',1,recieverObject);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /* 属性名表达式 */
+  let propKey = 'foo';
+  let obj = {
+    [propKey]: true,
+    ['a'+'bc']:123
+  }
+  console.log(obj['foo'],obj[propKey],obj['abc'],obj.abc,obj.foo)
+//////////
+let obj2 = {
+  ['a'+'b'](){
+    console.log(222)
+  }
+}
+obj2.ab()
+////////
+const keyA = {a:1};
+const keyB = {b:2};
+const myObject = {
+  [keyA]:'va',
+  [keyB]: 'vb'
+} 
+console.log(myObject,myObject[keyA])
+  </script>
+</body>
+</html>

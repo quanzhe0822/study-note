@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn">按钮</button>
+  <script>
+   //1.基本用法
+   promise.then(function(value){
+     //success
+   },function(error){
+     //failure
+   })
+   //例1
+   function timeout(ms) {
+     return new Promise((resolve,reject) => {
+       setTimeout(resolve,ms,'done');
+     })
+    }
+    timeout(500).then(val => console.log(val));
+    //例2 Promise新建后立即执行 loadfun
+    let promise = new Promise((resolve,reject) => {
+      console.log('Promise');
+      resolve();
+    })
+    promise.then(() => console.log('resolved'));
+    console.log('continue...')
+    //Promise
+    //continue...
+    //resolved
+    //例3.异步加载图片
+    function loadImagesAsync(url) {
+      return new Promise(function(resolve,reject) {
+        let img = new Image();
+        
+        img.onload = function() {
+          resolve(img);
+        };
+        
+        img.onerror = function() {
+          reject(img);
+        };
+
+        img.src=url;
+      });
+    }
+    //例4.Ajax操作
+    function _ajax (url) {
+      return new Promise(function(resolve,reject){
+        var xhr = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject('Microsoft.XMLHTTP');
+        xhr.open('GET',url);
+        xhr.onreadystatechange=function(){
+          if(this.readyState === 4 ) {
+            return;
+          }
+          if(this.status === 200) {
+            resolve(this.response);
+          }else {
+            reject(new Error(this.statusText));
+          }
+        }
+        xhr.send();
+      })
+    }
+    _ajax('/test.php').then(function(json) {
+      console.log(json)
+    },function(error) {
+      console.error('出错了',error);
+    })
+    //例5 一个Promise实例的resolve方法把另一个Promise实例作为参数返回
+    //当一个Promise异步操作的结果是返回另一个异步操作时，就像下面代码，p2的状态会根据p1的状态而改变，
+    //p1的状态会在3秒后改变，所以之前p2是不会触发回调函数的，即使自身设定的状态是1秒钟后改变。
+    //进而p2后面的then()语句都只会针对p1状态来触发回调函数。 
+    const p1 = new Promise(function(res,rej){
+      setTimeout(function(){
+        new Error('p1Error');
+      },3000)
+    })
+    const p2 = new Promise(function(res,rej){
+      setTimeout(function(){
+        res(p1)
+      },1000)
+    });
+    p2.then(result => console.log(result))
+    .catch(error => console.log(error))
+    //Error:p1Error
+
+    //例6. 调用resolve或reject 并不会终结Promise的参数函数的进行
+    //res()总是在本轮事件循环的末尾执行
+    new Promise(function(res,rej){
+      res(1);
+      console.log(2);
+    }).then(v => console.log(v));
+    //2
+    //1
+
+    //一般来说，调用Resolve或reject后 Promise的使命就完成了，后继操作应该放到then里面。
+    //所以，最好在它们前面加上return语句，这样就不会有意外。
+  </script>
+</body>
+
+</html>

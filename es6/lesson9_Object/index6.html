@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /* 可枚举性 */
+    //Object.getOwnPropertyDescriptor 方法可以获取该属性的描述对象
+    let obj = { foo: 123 };
+    Object.getOwnPropertyDescriptor(obj, 'foo')
+    // {
+    //   value: 123,
+    //   writable: true,
+    //   enumable: true,
+    //   configurable: true
+    // } 
+    // enumable属性 称为 '可枚举性',如果该属性为false，就表示某些操作忽略该属性
+    //for...in  Object.keys()  JSON.stringify() Object.assign() 忽略不可枚举的属性
+    Object.getOwnPropertyDescriptor(Object.prototype,'toString').enumerable //false
+    Object.getOwnPropertyDescriptor([],'length').enumerable //false
+    Object.getOwnPropertyDescriptor(class {foo() {}}.prototype, 'foo').enumerable//false
+    //es6 规定，所有class的原型的方法都是不可枚举的。
+
+
+    /* 属性的遍历 */
+    //for...in 循环遍历对象自身的和继承的可枚举属性
+    //Object.keys(obj) 返回一个数组，包括对象自身的（不含继承）所有可枚举属性（不含Symbol 属性）的键名。
+    //Object.getOwnPropertyNames(obj)返回一个数组，包含对象自身的所有属性（包括不可枚举，不包括Symbol）
+    
+
+  </script>
+</body>
+</html>

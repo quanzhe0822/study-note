@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+   /*  let {x:y=3} = {y:5}
+    console.log(y) */
+
+    let {toString:d}=123
+    console.log(d);
+
+   ({x=0,y=0}={}={})
+   console.log(x,y);
+
+   function move({z,c}={}){
+     console.log(z,c)
+   }
+   move()
+  </script>
+</body>
+</html>

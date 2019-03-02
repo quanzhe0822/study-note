@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+	//1.含义
+	//传统的JS的Objec，本质上市键值对的集合（Hash结构）,但是传统上只能用字符串当作键
+	//Map数据结构，类似于对象，也是键值对的集合，但是‘键’的返回不限于字符串，各种类型都可以当作键
+
+	//2.Map属性 size , set(value,key) , get(key), has(key), delete(key), clear()
+	//size
+	const map = new Map();
+	map.set('foo', true);
+	map.set('bar', false);
+	map.size //
+
+	//set()返回的时当前对象，所以可以采用链式写法。
+	const m = new Map()
+	m.set('edition', 6)
+	m.set('age', 22)
+	m.set(undefined, 'joy');
+
+	let map = new Map()
+		.set({a: 1}, 'a')
+		.set([1, 23, 3], 'b')
+		.set(1, 'c')
+
+
+	//get(key) 如果找不多key 就会返回undefine
+	const m = new Map()
+	const hello = function () {
+		console.log('hello')
+	};
+	m.set(hello, 'Hello es6')//键是函数
+	m.get(hello)//'Hello es6'
+
+
+	const m = new Map();
+	m.set('edition', 'nn')
+	m.has('edition')//true
+	m.has('tyt')//false
+
+
+	//delete 删除成功返回true失败返回false
+	const m = new Map()
+	m.set(undefined, 'nah');
+	m.has(undefined)//true
+	m.delete(undefined)
+	m.has(undefined)//false
+
+
+	//clear清除所有成员，没有返回值
+	let map = new Map()
+	map.set('foo', true)
+	map.set('bar', false);
+
+	map.size//2
+	map.clear()
+	map.size//0
+
+
+	//3.基本用法
+	//Map 作为构造函数，接受一个数组作为参数，该数组的成员是一个个表示键值对的数组
+	const map = new Map([
+		['name', 'joy'],
+		['title', 'nnn']
+	])
+	//Map构造函数结束数组作为参数，执行的是下面的算法
+	const m = new Map()
+	let arr = [['name', 'joyt', 'age', 22]]
+	arr.forEach(([key, value]) => m.set(key, value))
+
+
+	//不仅仅是数组，任何具有Iterable接口，且每个成员都是一个双元素的数组的数据结构都可以当作Map构造函数的参数。
+	//Set 和 Map 都可以用来生成新的Map。
+	const set = new Set([
+		['foo', 1],
+		['bar', 2]
+	])
+
+	let m = new Map(set);
+	m.get('foo')//1;
+
+
+	//Map对于键的比较
+	//如果键相同后一个会覆盖前一个
+	//对于原始类型采用严格相等 但是有一个例外NaN等于自身； undefined 和null是两个不同的键。
+	const map = new Map()
+	map.set(-0, 123)
+	map.get(+0)//123
+
+	map.set(true, 1)
+	map.set('true', 2)
+	map.get(true)//1
+
+	map.set(undefined, 3)
+	map.set(null, 4)
+	map.get(undefined)//3
+
+	map.set(NaN, 123)
+	map.get(NaN) / 123
+
+
+	//对于引用类型，比较是否都指向同一个内存地址
+	const m = new Map()
+	let a = {a: 1}
+	let b = {a: 1}
+	m.set(a, 111)
+	m.set(b, 222)
+	m.get(a)//111
+	m.get(b)//222
+
+
+	//4.遍历方法
+	//keys() 返回键名的遍历器
+	const m = new Map([
+		['a', 1],
+		['b', 2]
+	])
+	for (let key of m.keys()) {
+		console.log(key)
+	}
+	//'a'
+	//'b'
+
+	//values()
+	for (let value of map.values()) {
+		console.log(value)
+	}
+	//1
+	//2
+
+	for (let item of m.entries()) {
+		console.log(item[0], item[1])
+	}
+	//'a',1
+	//'b',2
+
+	for (let [key, value] of m) {
+		console.log(key, value)
+	}
+	//'a',1
+	//'b',2
+	//Map结构的默认遍历器接口（Symbol.iterator属性),就是entries方法
+	map[Symbol.iterator] === map.entries
+
+	//结合数组的map方法，filter方法，可以实现Map的遍历和过滤（Map本身没有map和filter方法）
+	const m = new Map()
+		.set(1, 'a')
+		.set(2, 'b')
+		.set(3, 'c')
+
+	const map1 = new Map(
+		[...m].map(([key, value]) => [key * 2, '_' + value])
+	);
+	//产生Map 结构 {1 => 'a',2 => 'b'}
+
+	const map2 = new Map(
+		[...m].filter(([key, value]) => key > 2)
+	)
+	//产生Map结构 {3 => 'c'}
+
+	//Map还有一个forEach方法,与数组的forEach方法类似，也可以实现遍历。
+	map.forEach(function (key, value, map) {
+		console.log(key, value, map, this)
+	}, obj)
+	//1,'a',Map遍历器，obj
+	//2,'b',Map遍历器，obj
+	//3,'c',Map遍历器，obj
+
+
+	//5.与其他数据结构的相互转换
+	//Map转为数组
+	var m = new Map()
+	var arr = [...m]
+
+	//数组转为Map
+	new Map([
+		[true, 7],
+		[{foo: 3}, ['abc']]
+	])
+
+	//Map转为对象
+	function mapToObject(map) {
+		var obj = Object.create(null);
+		for (let [key, value] of map) {
+			obj[key] = value;
+		}
+		return obj
+	}
+
+	const m = new Map([
+		[2, '33'],
+		[{a: 2}, 23]
+	])
+	mapToObject(m)
+
+	//对象转为Map
+	function objectToMap(obj) {
+		var map = new Map();
+		for (var key in obj) {
+			map.set(key, obj[key])
+		}
+		return map
+	}
+	var obj = {
+		a: 2,
+		c: 2,
+	}
+	objectToMap(obj)
+
+    //Map转为json  有2种情况
+    //Map的键名都是字符串
+    function strMapToJson(strMap) {
+		return JSON.stringify(mapToObject(strMap));
+    }
+    let strMap = new Map().set('yes',true).set('no',false);
+	strMapToJson(strMap)
+    //Map的键名非字符串时，这时可以选择转为数组JSON
+    function mapToArrayJson (map) {
+		return JSON.stringify([...map]);
+    }
+
+    //JSON转为Map 2中情况
+    //所有键名都是字符串
+    function jsonToMap(json) {
+      return objectToMap(JSON.parse(json))
+    }
+    //json就是一个数组而且每个数组成员本身，又是一个有2个成员的数组。
+    function arrJsonToMap(arrJson) {
+		return new Map(JSON.parse(arrJson))
+    }
+
+
+</script>
+</body>
+</html>

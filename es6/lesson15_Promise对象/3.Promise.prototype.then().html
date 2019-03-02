@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //then方法是定义在Promise.prototype上的，
+    //作用是为Promise实例对象添加状态改变时的回调函数
+    //返回的是一个新的Promise对象
+    //可以采用链式写法
+    //then里的回调函数可以接受上一个then里回调函数返回的值，作为参数使用
+    //如果上一个回调函数返回的是另一个Promise对象，这时候回调函数就会等待这个新的Promise对象状态发生变化，才会被调用。
+    _ajax('url.php').then(
+      url => _ajax(url)
+    ).then(//_ajax(url)状态发生改变才能执行下面回调函数
+      result => console.log(result),
+      err => console.log(err)
+    )
+    
+    
+  </script>
+</body>
+
+</html>

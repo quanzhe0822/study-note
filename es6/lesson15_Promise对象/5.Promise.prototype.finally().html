@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //finally方法用于指定不管Promise对象最后状态如何，都会执行的操作。该方法是es2018引入标准的   
+    //finally方法的回调函数不接受任何参数，回调函数的执行不依赖于Promise执行结果。
+
+    //finally实现
+    Promise.prototype.finally = function (callback) {
+      console.log(2222)
+      let p = this.constructor;
+      return this.then(
+        value => p.resolve(callback()).then(() => value),
+        reason => P.resolve(callback()).then(() => 2)
+      )
+    }
+
+    //finally方法总是会返回原来的值
+    Promise.resolve('success').then(() => {}, () => {}) //Promise {<resolved>:undefined}
+    Promise.resolve('success').finally(() => {}) //Promise {<resolved>:success}
+    Promise.reject('error').then(() => {}, () => {}) //Promise {<resolved>:undefined}
+    Promise.reject('error').finally(() => {}) //Promise {<rejected>:error}
+  </script>
+</body>
+
+</html>

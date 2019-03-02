@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /* Object.assign 对象的合并 */
+    const target = {
+      a: 1
+    }
+    const source = {
+      b: 1
+    }
+    const source2 = {
+      c: 1
+    }
+    Object.assign(target, source, source2) //{a:1,b:1,c:1}
+    ////
+    typeof Object.assign(2) //obj
+    Object.assign(undefined) //报错
+    Object.assign(null) //报错
+
+    ////
+    let obj = {
+      a: 1
+    }
+    Object.assign(obj, undefined) === obj //true
+    Object.assign(obj, null) === obj // true
+
+    ///
+    const v1 = 'abc';
+    const v2 = true;
+    const v3 = 10;
+    const obj3 = Object.assign({}, v1, v2, v3);
+    console.log(obj3) // {'0':'a',"1":"b","2":"c"} 
+
+    /* 注意点 */
+    //1.浅拷贝 作用于源对象某个属性为对象时
+    const o = {
+      a: 1,
+      c: {
+        b: 2
+      }
+    }
+    const o2 = Object.assign({}, o);
+    o2.c.b = 3;
+    o.c.b //3
+
+    //2.同名属性替换
+
+    const p = {
+      a: 2,
+      c: 3
+    }
+    const p3 = {
+      a: 4,
+      b: 2
+    }
+    const p2 = Object.assign({}, p, p3)
+    p2 //{a:4,c:3,b:2}
+
+    //3.数组的处理 会把数组视为对象
+    const f = Object.assign([1, 2, 3, 4], [7, 8])
+    f //[7,8,3,4]
+
+    //4.取值函数的处理 不会把函数复制过去 只会拿到值以后，将这个值复制过去。
+    const q = {
+      get f() {
+        return 1
+      }
+    }
+    const q2 = Object.assign({}, q)
+    q2 //{f:1}
+
+    /* 常见用途 */
+    //1.为对象添加属性
+    class Point {
+      constructor(x, y) {
+        Object.assign(this, {
+          x,
+          y
+        });
+      }
+    }
+    //2.为对象添加方法
+    Object.assign(SomeClass.prototype,{
+      someMethod(){
+
+      },
+      anotherMethod(){}
+    })///等同于
+    SomeClass.prototype.someMethod=function(){}
+    SomeClass.prototype.anotherMethod=function(){}
+
+    //3.克隆对象
+    function clone (obj) {
+      return Obj.assign({},obj)
+      //只能克隆原始对象自身的值，克隆不了继承的值
+    }
+    function cloneAll (obj) {
+      let originProto = Object.getPrototypeOf(origin);
+      return Object.assign(Object.create(originProto),origin);
+    }
+
+    //4.合并多个对象
+    const merge = (target,...sources) => Object.assign(traget,...sources)
+    const merge2 = (...sources) => Object.assign({},...sources)
+
+    //5.为属性指定默认
+    const DEFAULT = {
+      logLevel: 0,
+      outputFormat: 'html'
+    }
+    function processContent(options) {
+      options = Object.assign({},DEFAULT,options);
+      //要避免默认对象的属性值指向另一个对象，因为options里的同名属性会直接会给覆盖掉。
+    }
+
+  </script>
+</body>
+
+</html>

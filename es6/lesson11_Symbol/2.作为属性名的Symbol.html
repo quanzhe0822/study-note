@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+	/*2.作为属性名的Symbol*/
+
+	//写法
+	let mySymbol = Symbol();
+	let a = {};
+	a[mySymbol] = 'hello!';
+	let a = {
+		[mySymbol]: 'hellow!'
+	};
+	let a = {};
+	Object.defineProperty(a, mySymbol, {value: 'hello!'});
+	a[mySymbol]//'hello'
+
+	//Symbol值作为对象属性名时，不能用点运算符
+	//在对象内部使用Symbol值定义属性时必须放在中括号内
+
+	//定义一组常量，保证这组常量的值都是不相等的
+	const log = {};
+	log.levels = {
+		DEBUG: Symbol('debug'),
+		INFO: Symbol('info'),
+		WARN: Symbol('warn')
+	}
+
+	const COLOR_RED = Symbol();
+	const COLOR_GREEN = Symbol();
+	function getComplement(color) {
+		switch (color) {
+			case COLOR_RED:
+				return COLOR_RED;
+			case COLOR_GREEN:
+				return COLOR_GREEN;
+			default:
+				throw new Error('undefined color')
+		}
+	}
+</script>
+</body>
+</html>
