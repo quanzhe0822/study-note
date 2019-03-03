@@ -27,7 +27,11 @@ var selectCity = {
             citiesObjList.push({
                 id: $(v).attr('data-id'),
                 pid: $(v).attr('data-pid'),
+<<<<<<< HEAD
                 rid:$(v).attr('data-rid'),
+=======
+                rid:$(v).attr('data-id'),
+>>>>>>> d393041250c57f96464768344b8c18a4de369ab0
                 name: $(v).attr('data-name'),
                 state: state
             });
@@ -144,13 +148,21 @@ var selectCity = {
             if (_this.panelEle.has('[data-id=' + v.id + ']').length !== 0) {
                 return false;
             } else {
+<<<<<<< HEAD
                 _this.panelEle.append($('<span data-name=' + v.name + ' data-pid=' + v.pid +'  dat-rid='+v.rid+'  data-id=' + v.id + '>' + v.name + '</span>'))
+=======
+                _this.panelEle.append($('<span data-name=' + v.name + ' data-pid=' + v.pid + 'dat-rid='+v.rid+'  data-id=' + v.id + '>' + v.name + '</span>'))
+>>>>>>> d393041250c57f96464768344b8c18a4de369ab0
             }
         })
         //省份模块
         for (var pid in provincesId) {
             //该省份包含的城市数量
+<<<<<<< HEAD
             var totalLength = $cityZone.filter('[data-pid='+pid+']').length;
+=======
+            var totalLength = _this.provinceList[pid].length;
+>>>>>>> d393041250c57f96464768344b8c18a4de369ab0
 
             //如果当前省份为直辖市就跳出当前遍历，继续下一个遍历
             if (totalLength === 0) continue;
@@ -220,7 +232,11 @@ $(function () {
                     regions:data
                 }
             }
+<<<<<<< HEAD
             // myChart.setChartOption(option)
+=======
+            myChart.setChartOption(option)
+>>>>>>> d393041250c57f96464768344b8c18a4de369ab0
         },
     })
 
