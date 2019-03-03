@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .province,
+        .city {
+            display: inline-block;
+        }
+
+        span {
+            display: inline-block;
+        }
+
+        .check {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #222;
+        }
+
+        .active .check {
+            background-color: #222;
+        }
+
+        .city-box {
+            display: none;
+        }
+
+        .city-container .open {
+            display: block;
+        }
+
+        .province-box .open {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="all" data-pid=0>
+        <span class="check all-check"></span>
+        <span class="province-name">全选</span>
+    </div>
+    <div class="province-box">
+        <div class="city" data-id="beijing" data-pid="beijing" data-name="北京" data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">北京</span>
+        </div>
+        <div class="city" data-id="shanghai"  data-pid='shanghai' data-name='上海' data-open=0>
+                <span class="check province-check"></span>
+                <span class="province-name">上海</span>
+            </div>
+        <div class="province" data-id="jilin" data-pid=0 data-name='吉林' data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">吉林</span>
+        </div>
+        <div class="province" data-id="liaoning" data-pid=0 data-name='辽宁' data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">辽宁</span>
+        </div>
+        <div class="province" data-id="heilongjiang" data-pid=0 data-name='黑龙江' data-open=0>
+            <span class="check province-check"></span>
+            <span class="province-name">黑龙江</span>
+        </div>
+    </div>
+    <div class="city-container">
+        <div class="city-box" data-pid="jilin">
+            <div class="city" data-pid="jilin" data-id="yanbian" data-name='延边' data-pid=0>
+                <span class="check city-check"></span>
+                <span>延边</span>
+            </div>
+            <div class="city" data-pid="jilin" data-id="changchun" data-name='长春' data-pid=0>
+                <span class="check city-check"></span>
+                <span>长春</span>
+            </div>
+            <div class="city" data-pid="jilin" data-id="siping" data-name='四平' data-pid=0>
+                <span class="check city-check"></span>
+                <span>四平</span>
+            </div>
+        </div>
+        <div class="city-box" data-pid="liaoning">
+            <div class="city" data-pid="liaoning" data-id="shenyang" data-name='沈阳' data-pid=0>
+                <span class="check city-check"></span>
+                <span>沈阳</span>
+            </div>
+            <div class="city" data-pid="liaoning" data-id="panjin" data-name='盘锦' data-pid=0>
+                <span class="check city-check"></span>
+                <span>盘锦</span>
+            </div>
+            <div class="city" data-pid="liaoning" data-id="dalian" data-name='大连' data-pid=0>
+                <span class="check city-check"></span>
+                <span>大连</span>
+            </div>
+        </div>
+        <div class="city-box" data-pid="heilongjiang">
+            <div class="city" data-pid="heilongjiang" data-id="mudanjiang" data-name='牡丹江' data-pid=0>
+                <span class="check city-check"></span>
+                <span>牡丹江</span>
+            </div>
+            <div class="city" data-pid="heilongjiang" data-id="haerbin" data-name='哈尔滨' data-pid=0>
+                <span class="check city-check"></span>
+                <span>哈尔滨</span>
+            </div>
+            <div class="city" data-pid="heilongjiang" data-id="jixi" data-name='鸡西' data-pid=0>
+                <span class="check city-check"></span>
+                <span>鸡西</span>
+            </div>
+        </div>
+        <div class="show"><p class="unlimited" style="display:none">不限</p></div>
+
+
+    </div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a"></div>
+    <div class="a" data-id=1></div>
+    <div class="a" data-id=1></div>
+    <script>
+    </script>
+    <script src="module.js"></script>
+ 
+</body>
+
+</html>
