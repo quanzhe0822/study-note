@@ -3,7 +3,6 @@ var selectCity = {
     provincesNodeList:null,
     citiesNodelist:null,
     panelEle:null,
-    panelItemEle:null,
     provinceAllChecked:null,
     citiesLength:null,
     setChartOption:function(){},
@@ -12,13 +11,12 @@ var selectCity = {
         this.provincesNodeList=object.provincesNodeList;
         this.citiesNodelist=object.citiesNodelist;
         this.panelEle=object.panelEle;
-        this.panelItemEle=object.panelItemEle;
         this.provinceAllChecked=object.provinceAllChecked;
         this.citiesLength=object.citiesLength;
         this.setChartOption=object.setChartOption;
     },
 
-    /*
+    /**
     *收集城市信息（id，pid,name,state)
     */
     collectCiteisInfo:function(citiesList,state){
@@ -34,7 +32,7 @@ var selectCity = {
         });
         return citiesObjList
     },
-    /*
+    /**
      *监听点击取消事件
      *获取要选择的城市信息列表
      *调用选择事件并且传入城市信息列表
@@ -43,7 +41,7 @@ var selectCity = {
         var citiesObjList=this.collectCiteisInfo(citiesEleList,1)
         this.selectCities(citiesObjList);
     },
-    /*
+    /**
      *监听点击取消事件
      *获取要取消城市的信息列表
      *调用取消事件并且传入城市信息列表
@@ -54,7 +52,7 @@ var selectCity = {
         this.cancelSelectCities(citiesObjList);
     },
 
-    /*
+    /**
      *取消事件
      *根据传过来的城市信息列表
      *取消城市的选中态样式
@@ -109,7 +107,7 @@ var selectCity = {
         }
 
     },
-      /*
+      /**
      *选择事件
      *根据传过来的城市信息列表
      *设置城市的选中态样式
@@ -144,7 +142,7 @@ var selectCity = {
             if (_this.panelEle.has('[data-id=' + v.id + ']').length !== 0) {
                 return false;
             } else {
-                _this.panelEle.append($('<span data-name=' + v.name + ' data-pid=' + v.pid +'  dat-rid='+v.rid+'  data-id=' + v.id + '>' + v.name + '</span>'))
+                _this.panelEle.append($('<span >' + v.name + '</span>'))
             }
         })
         //省份模块
@@ -181,14 +179,14 @@ var selectCity = {
         } else {
             //显示面板中的所有城市
             //隐藏‘不限’字符
-            _this.panelEle.find('span').css('display', 'block');
+            _this.panelEle.find('span').css('display', 'inline-block');
             $('.show .unlimited').css('display', 'none');
 
             //取消全选按钮的选中态
             _this.provinceAllChecked.removeClass('active')
         }
     },
-    /*
+    /**
      *去重，合并缓存中的城市
      */
     concatCities: function (data) {
@@ -211,7 +209,6 @@ $(function () {
         provincesNodeList:$('.province'),
         citiesNodelist:$('.city'),
         panelEle:$('.show'),
-        panelItemEle:$('.show').find('span'),
         provinceAllChecked:$('.all'),
         citiesLength:$('.city').length,
         setChartOption:function(data){
