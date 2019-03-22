@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="src/echarts.min.js"></script>
+    <title>大数据洞察简介</title>
+    <style>
+        html,body{
+            height:100%;
+            width:100%;
+            position: relative;
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" style="width:100%;height:100%"></div>
+    <script>
+        let myChart = echarts.init(document.getElementById('main'));
+        var webkitDep
+        $.ajax({
+            url: 'json/data.json',
+            success: function (d) {
+            
+                webkitDep = d;
+                var option = {
+                    color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3','#009966','#663366','#CCCC33','#996633','#CC3366'],
+                    legend: {
+                        data: ["餐饮美食","房产","服饰鞋帽/箱包","互联网/电子产品","教育","旅游 ","美容","汽车","体育运动","医疗健康","游戏","娱乐休闲","孕产育儿","政务/法律服务","金融","商务服务"]
+                    },
+                    tooltip:{
+                            formatter:function(d){
+                                if(!d.value) return;
+                                return d.name+'</br>'+d.value
+                            }
+                        },
+                    series: [{
+                        type: 'graph',
+                        layout: 'force',
+                        animation: false,
+                        label: {
+                            normal: {
+                                position: 'right',
+                                formatter: '{b}',
+                                show: false,
+                            }
+                        },
+                        emphasis:{
+                            label:{
+                                show:false
+                            }
+                        },
+                        draggable: true,
+                        data: webkitDep.nodes,
+                        categories: webkitDep.categories,
+                        force: {
+                            initLayout: 'circular',
+                            edgeLength:[0, 100],
+                            repulsion: 50,
+                            gravity: 0.1
+                        },
+                        edges: webkitDep.links
+                    }]
+                };
+
+                myChart.setOption(option);
+            }
+        })
+    </script>
+</body>
+
+</html>
