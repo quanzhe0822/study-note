@@ -28,6 +28,7 @@
             success: function (d) {
             
                 webkitDep = d;
+                console.log(webkitDep.nodes)
                 var option = {
                     color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3','#009966','#663366','#CCCC33','#996633','#CC3366'],
                     legend: {
@@ -35,8 +36,24 @@
                     },
                     tooltip:{
                             formatter:function(d){
-                                if(!d.value) return;
-                                return d.name+'</br>'+d.value
+                                if(!d.value){
+                                    return webkitDep.nodes[d.data.source].name+'—'+webkitDep.nodes[d.data.target].name
+                                };
+                                var source=d.data.id;
+                                var startPoint=webkitDep.links.filter(function(v,i){
+                                    return v.source == source
+                                });
+                                var endPoint=webkitDep.links.filter(function(v,i){
+                                    return v.target == source
+                                });
+                                var tar='';
+                                startPoint.forEach(function(v,i){
+                                    tar+='&nbsp;&nbsp;'+webkitDep.nodes[v.target].name+'</br>'
+                                })
+                                endPoint.forEach(function(v,i){
+                                    tar+='&nbsp;&nbsp;'+webkitDep.nodes[v.source].name+'</br>'
+                                })
+                                return d.name+':</br>&nbsp;&nbsp;'+d.value+'</br>关联标签:</br>'+tar
                             }
                         },
                     series: [{
