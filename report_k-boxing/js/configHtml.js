@@ -1,62 +1,52 @@
 function configAnimationHtml(name) {
     var ob = {};
     switch (name) {
-        case 'spe18':
+        case 'spe19':
             var page = new Spage1();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe22':
+        case 'spe23':
             ob.html = new Spage2().html;
             ob.action = new Spage2().currentPageAction;
             break;
-        case 'spe30':
+        case 'spe31':
             var page = new Spage3();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe32':
+        case 'spe44':
             var page = new Spage4();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe44':
+        case 'spe48':
             var page = new Spage5();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe48':
+        case 'spe56':
             var page = new Spage6();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe56':
+        case 'spe69':
             var page = new Spage7();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe58':
+        case 'spe73':
             var page = new Spage8();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe70':
+        case 'spe81':
             var page = new Spage9();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;
-        case 'spe74':
+        case 'spe107':
             var page = new Spage10();
-            ob.html = page.html;
-            ob.action = page.currentPageAction;
-            break;
-        case 'spe82':
-            var page = new Spage11();
-            ob.html = page.html;
-            ob.action = page.currentPageAction;
-            break;
-        case 'spe84':
-            var page = new Spage12();
             ob.html = page.html;
             ob.action = page.currentPageAction;
             break;

@@ -1,24 +1,18 @@
 var pages=[]
 for(var i=1;i<=116;i++){
-    if(i==18){
+    if(i==19){
         pages.push({
             page: i,
             spec: true,
             pName: 'spe'+i
         })
-    }else if(i ==22){
+    }else if(i ==23){
         pages.push({
             page: i,
             spec: true,
             pName: 'spe'+i
         })
-    }else if(i ==30){
-        pages.push({
-            page: i,
-            spec: true,
-            pName: 'spe'+i
-        })
-    }else if(i ==32){
+    }else if(i ==31){
         pages.push({
             page: i,
             spec: true,
@@ -42,31 +36,25 @@ for(var i=1;i<=116;i++){
             spec: true,
             pName: 'spe'+i
         })
-    }else if(i ==58){
+    }else if(i ==69){
         pages.push({
             page: i,
             spec: true,
             pName: 'spe'+i
         })
-    }else if(i ==70){
+    }else if(i ==73){
         pages.push({
             page: i,
             spec: true,
             pName: 'spe'+i
         })
-    }else if(i ==74){
+    }else if(i ==81){
         pages.push({
             page: i,
             spec: true,
             pName: 'spe'+i
         })
-    }else if(i ==82){
-        pages.push({
-            page: i,
-            spec: true,
-            pName: 'spe'+i
-        })
-    }else if(i ==84){
+    }else if(i ==107){
         pages.push({
             page: i,
             spec: true,

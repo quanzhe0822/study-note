@@ -1,6 +1,5 @@
 function imgLoad(imgSrcs, callback) {
     var ar = 0;
-    console.log(imgSrcs)
     imgSrcs.forEach(function (v, i) {
         var img = new Image();
         img.src = v;
