@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+    <script src="city-select.js"></script>
+    <script src="ajax.js"></script>
+    <style>
+        .select-box>div {
+            display: inline-block;
+        }
+    </style>
+</head>
+<div id="city-select">
+    <!-- <div class="select-box">
+        <div class="region">
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox" value="all-region" name="all-region">
+                        <span>全选</span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" value="东北地区" name="region">
+                    <span>东北地区</span>
+                </li>
+                <li>
+                    <input type="checkbox" value="华北地区" name="region">
+                    <span>华北地区</span>
+                </li>
+            </ul>
+        </div>
+        <div class="province">
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox" value="all-province" name="all-province">
+                        <span>全选</span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" value="吉林省" name="province">
+                    <span>吉林省</span>
+                </li>
+                <li>
+                    <input type="checkbox" value="辽宁省" name="province">
+                    <span>辽宁省</span>
+                </li>
+            </ul>
+        </div>
+        <div class="city">
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox" value="all-city" name="all-city">
+                        <span>全选</span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" value="延吉" name="city">
+                    <span>延吉</span>
+                </li>
+                <li>
+                    <input type="checkbox" value="长春" name="city">
+                    <span>长春</span>
+                </li>
+            </ul>
+        </div>
+    </div> -->
+    <div class="show-box">
+
+    </div>
+</div>
+
+<body>
+    <script>
+        var aj = new Ajax({
+            url: 'cities.json',
+            success: function (d) {
+                console.log(d);
+                new CitySelect(d)
+
+            }
+        }).request()
+    </script>
+</body>
+
+</html>
