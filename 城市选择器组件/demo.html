@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>demo</title>
+    <script src="./method.js"></script>
     <script src="./city-select.js"></script>
     <script src="./ajax.js"></script>
     <style>
         .select-box>div {
             display: inline-block;
+        }
+        .province_box{
+            display: none;
+        }
+        .province_box.show{
+            display: block;
         }
     </style>
 </head>
@@ -81,11 +88,13 @@
         var aj = new Ajax({
             url: 'cities.json',
             success: function (d) {
-                console.log(d);
-                new CitySelect(d)
-
+                var t=new CitySelect(d);
+                t.on('onCheckRegionItem',function(e){
+                    console.log(e)
+                })
             }
         }).request()
+     
     </script>
 </body>
 

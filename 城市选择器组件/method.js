@@ -1,123 +1,72 @@
-var a={
-     //城市
- clickCity: function () {
-    this.state = !this.state;
-    emit('onSelectCity', {
-        city
-    }) //触发省份 的监听
-},
-onSelectProvinceToCity: function (pro) { //监听省份的点击事件
-    pro.childrens.forEach(function (e) {
-        e.state = pro.state;
-    });
-},
-
-//省份
-clickProvince: function (pro) {
-    this.state = !this.state;
-    emit('onSelectProvinceToCity', {
-        pro
-    }); //触发城市的监听
-    emit('onProvinceSendDataToRegion', {
-        pro
-    }); //触发大区的监听
-},
-onSelectCity: function (city) { //监听城市的点击事件
-    if (city.state) {
-        this.pro.citiesCheckedCount++;
-        if (this.pro.citiesCheckedCount === this.pro.citiesLength) {
-            this.pro.state = true;
-            emit('onSelectProvinceToRegion', {
-                pro
-            }); //触发大区的监听事件
-        }
-    } else {
-        this.pro.citiesCheckedCount--;
-        if (this.pro.citiesCheckedCount === this.pro.citiesLength - 1) {
-            this.pro.state = false;
-            emit('onSelectProvinceToRegion', {
-                pro
-            }); //触发大区的监听事件
-        }
-    }
-},
-onRegionSendDataToProvince: function (reg) { //监听大区的点击事件
-    reg.children.forEach(function (e) {
-        e.state = reg.state;
-        if (e.state) {
-            e.citiesCheckedCount = e.citiesLength;
-        } else {
-            e.citiesCheckedCount = 0;
-        }
-        emit('onSelectProvinceToCity', {
-            e
-        }) //触发城市的监听事件;
-    })
-
-},
-
-
-//大区
-clickRegion: function (reg) {
-    reg.state = !reg.state;
-    emit('onSelectRegion', {
-        reg
-    });
-    emit('onAllChecked', {
-        reg
-    }); //触发大区的监听事件
-},
-onSelectProvinceToRegion: function (pro) {
-    if (pro.state) {
-        this.regi.proCheckedCount++;
-        if (this.regi.proCheckedCount === this.reg.prosLength) {
-            this.regi.state = true;
-            emit('onAllChecked', {
-                reg
-            }); 
-        }
-    } else {
-        this.regi.proCheckedCount--;
-        if (this.regi.proCheckedCount === this.reg.prosLength - 1) {
-            this.pro.state = false;
-            emit('onAllChecked', {
-                reg
-            }); //触发大区的监听事件
-        }
-    }
-},
-onSelectAll:function(isAllChecked){
-    reg.forEach(function (e) {
-        e.state = isAllChecked.state;
-        if (e.state) {
-            e.prosCheckedCount = e.prosLength;
-        } else {
-            e.prosCheckedCount = 0;
-        }
-        emit('onSelectRegion', {
-            e
-        }) //触发城市的监听事件;
-    })
-},
-//所有
-onAllChecked:function(reg){
-    if(reg.state){
-        this.regionCheckedCount++;
-        if(this.regionCheckedCount===this.regionLengths){
-            this.isAllChecked=true;
-        }
-    }else{
-        this.regionCheckedCount--;
-        if(this.regionCheckedCount===this.regionLengths-1){
-            this.isAllChecked=false;
-        }
-    }
-},
-clickAll:function(){
-    this.isAllChecked = !this.isAllChecked;
-    emit('onSelectAll',{isAllChecked})
+const OP = Object.prototype;
+const types = {
+    obj: '[object Object]',
+    array: '[object Array]'
 }
+const OAM = ['push', 'pop', 'shift', 'unshift', 'short', 'reverse', 'splice']
+class Jsonob {
+    constructor(obj, cb) {
+        if (OP.toString.call(obj) !== types.obj && OP.toString.call(obj) !== types.array) {
+            console.log('请传入一个对象或数组');
+            return false;
+        }
+        this._callback = cb;
+        this.observe(obj);
+    }
+    observe(obj, path) {
+        if (OP.toString.call(obj) === types.array) {
+            this.overrideArrayProto(obj, path);
+        }
+        Object.keys(obj).forEach((key) => {
+            let oldVal = obj[key];
+            let pathArray = path && path.slice();
+            if (pathArray) {
+                pathArray.push(key);
+            } else {
+                pathArray = [key];
+            }
+            Object.defineProperty(obj, key, {
+                get: function () {
+                    return oldVal;
+                },
+                set: (function (newVal) {
+                    if (oldVal !== newVal) {
+                        if (OP.toString.call(newVal) === '[object Object]') {
+                            this.observe(newVal, pathArray);
+                        }
+                        this._callback(newVal, oldVal, pathArray)
+                        oldVal = newVal
+                    }
+                }).bind(this)
+            })
+            if (OP.toString.call(obj[key]) === types.obj || OP.toString.call(obj[key]) === types.array) {
+                this.observe(obj[key], pathArray)
+            }
+        }, this)
+    }
+    overrideArrayProto(array, path) {
+        // 保存原始 Array 原型  
+        var originalProto = Array.prototype,
+            // 通过 Object.create 方法创建一个对象，该对象的原型是Array.prototype  
+            overrideProto = Object.create(Array.prototype),
+            self = this,
+            result;
+        // 遍历要重写的数组方法  
+        OAM.forEach((method) => {
+            Object.defineProperty(overrideProto, method, {
+                value: function () {
+                    var oldVal = this.slice();
+                    //调用原始原型上的方法  
+                    result = originalProto[method].apply(this, arguments);
+                    //继续监听新数组  
+                    self.observe(this, path);
+                    self._callback(this, oldVal, path);
+                    return result;
+                }
+            })
+        });
+        // 最后 让该数组实例的 __proto__ 属性指向 假的原型 overrideProto  
+        array.__proto__ = overrideProto;
 
-
-
+    }
 }
